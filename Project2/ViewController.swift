@@ -21,8 +21,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        
-        
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
         button1.layer.borderWidth = 1
@@ -34,6 +32,8 @@ class ViewController: UIViewController {
         button3.layer.borderColor = UIColor.lightGray.cgColor
         
         askQuestion(action: nil)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showScore))
     }
     func askQuestion(action: UIAlertAction!){
         countries.shuffle()
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
-        title = "What is the flag of \(countries[correctAnswer].uppercased())         Your score: \(score)"
+        title = "What is the flag of \(countries[correctAnswer].uppercased())   Your score: \(score)"
         
         questionsAsked += 1
     }
@@ -72,6 +72,11 @@ class ViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Countine", style: .default, handler: askQuestion))
         present(ac, animated: true)
         }
+    }
+    @objc func showScore(){
+        let vc = UIActivityViewController(activityItems: ["My score is \(score)"], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 
